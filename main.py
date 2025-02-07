@@ -1,6 +1,7 @@
 import time
 import json
 import gspread
+from datetime import datetime
 from google.oauth2.service_account import Credentials
 from web3 import Web3
 
@@ -78,6 +79,8 @@ def update_google_sheet():
         cells[8 * i + 7].value = owner_address
 
     sheet.update_cells(cells)
+    
+    sheet.update_cell(8, 13, datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC+00:00"))
 
     end_time = time.time()
     print(f"Time taken: {end_time - start_time} seconds")
