@@ -43,7 +43,7 @@
     },
     {
         "inputs": [],
-        "name": "DLpAddressCannotBeChanged",
+        "name": "DlpAddressCannotBeChanged",
         "type": "error"
     },
     {
@@ -79,6 +79,11 @@
     },
     {
         "inputs": [],
+        "name": "EpochRewardsAlreadyDistributed",
+        "type": "error"
+    },
+    {
+        "inputs": [],
         "name": "ExpectedPause",
         "type": "error"
     },
@@ -109,6 +114,11 @@
     },
     {
         "inputs": [],
+        "name": "InvalidName",
+        "type": "error"
+    },
+    {
+        "inputs": [],
         "name": "InvalidParam",
         "type": "error"
     },
@@ -120,6 +130,11 @@
     {
         "inputs": [],
         "name": "InvalidStakersPercentage",
+        "type": "error"
+    },
+    {
+        "inputs": [],
+        "name": "LastEpochMustBeFinalised",
         "type": "error"
     },
     {
@@ -145,22 +160,6 @@
     {
         "inputs": [],
         "name": "ReentrancyGuardReentrantCall",
-        "type": "error"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint8",
-                "name": "bits",
-                "type": "uint8"
-            },
-            {
-                "internalType": "uint256",
-                "name": "value",
-                "type": "uint256"
-            }
-        ],
-        "name": "SafeCastOverflowedUintDowncast",
         "type": "error"
     },
     {
@@ -203,32 +202,6 @@
         ],
         "name": "UUPSUnsupportedProxiableUUID",
         "type": "error"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "uint256",
-                "name": "dlpId",
-                "type": "uint256"
-            }
-        ],
-        "name": "DlpBecameEligible",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "uint256",
-                "name": "dlpId",
-                "type": "uint256"
-            }
-        ],
-        "name": "DlpDeregistered",
-        "type": "event"
     },
     {
         "anonymous": false,
@@ -302,6 +275,25 @@
             }
         ],
         "name": "DlpRegistered",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "dlpId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "enum IDLPRootCore.DlpStatus",
+                "name": "newStatus",
+                "type": "uint8"
+            }
+        ],
+        "name": "DlpStatusUpdated",
         "type": "event"
     },
     {
@@ -382,38 +374,6 @@
         "anonymous": false,
         "inputs": [
             {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "newEligibleDlpsLimit",
-                "type": "uint256"
-            }
-        ],
-        "name": "EligibleDlpsLimitUpdated",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "epochId",
-                "type": "uint256"
-            }
-        ],
-        "name": "EpochCreated",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "uint256",
-                "name": "epochId",
-                "type": "uint256"
-            },
-            {
                 "indexed": true,
                 "internalType": "uint256",
                 "name": "dlpId",
@@ -421,51 +381,12 @@
             },
             {
                 "indexed": false,
-                "internalType": "uint256",
-                "name": "totalStakesScore",
-                "type": "uint256"
+                "internalType": "bool",
+                "name": "verified",
+                "type": "bool"
             }
         ],
-        "name": "EpochDlpScoreSaved",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "newEpochDlpsLimit",
-                "type": "uint256"
-            }
-        ],
-        "name": "EpochDlpsLimitUpdated",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "newEpochRewardAmount",
-                "type": "uint256"
-            }
-        ],
-        "name": "EpochRewardAmountUpdated",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "newEpochSize",
-                "type": "uint256"
-            }
-        ],
-        "name": "EpochSizeUpdated",
+        "name": "DlpVerificationUpdated",
         "type": "event"
     },
     {
@@ -550,19 +471,6 @@
         "anonymous": false,
         "inputs": [
             {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "newRewardClaimDelay",
-                "type": "uint256"
-            }
-        ],
-        "name": "RewardClaimDelayUpdated",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
                 "indexed": true,
                 "internalType": "bytes32",
                 "name": "role",
@@ -638,76 +546,6 @@
         "anonymous": false,
         "inputs": [
             {
-                "indexed": true,
-                "internalType": "uint256",
-                "name": "stakeId",
-                "type": "uint256"
-            }
-        ],
-        "name": "StakeClosed",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "stakeId",
-                "type": "uint256"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "staker",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "uint256",
-                "name": "dlpId",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "StakeCreated",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "newStakeWithdrawalDelay",
-                "type": "uint256"
-            }
-        ],
-        "name": "StakeWithdrawalDelayUpdated",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "uint256",
-                "name": "stakeId",
-                "type": "uint256"
-            }
-        ],
-        "name": "StakeWithdrawn",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
                 "indexed": false,
                 "internalType": "address",
                 "name": "account",
@@ -733,6 +571,19 @@
     {
         "inputs": [],
         "name": "DEFAULT_ADMIN_ROLE",
+        "outputs": [
+            {
+                "internalType": "bytes32",
+                "name": "",
+                "type": "bytes32"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "DLP_ROOT_ROLE",
         "outputs": [
             {
                 "internalType": "bytes32",
@@ -771,6 +622,19 @@
     },
     {
         "inputs": [],
+        "name": "NEW_MULTIPLIER_EPOCH",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "UPGRADE_INTERFACE_VERSION",
         "outputs": [
             {
@@ -786,138 +650,18 @@
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "stakeId",
-                "type": "uint256"
-            }
-        ],
-        "name": "calculateStakeClaimableAmount",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "stakeAmount",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "stakeStartBlock",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "blockNumber",
-                "type": "uint256"
-            }
-        ],
-        "name": "calculateStakeScore",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "stakeId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "lastEpochToClaim",
-                "type": "uint256"
-            }
-        ],
-        "name": "claimStakeRewardUntilEpoch",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "stakeIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "claimStakesReward",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "stakeIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "closeStakes",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "createEpochs",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "blockNumber",
-                "type": "uint256"
-            }
-        ],
-        "name": "createEpochsUntilBlockNumber",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
                 "name": "dlpId",
                 "type": "uint256"
-            }
-        ],
-        "name": "createStake",
-        "outputs": [],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "daySize",
-        "outputs": [
+            },
             {
                 "internalType": "uint256",
-                "name": "",
+                "name": "amount",
                 "type": "uint256"
             }
         ],
-        "stateMutability": "view",
+        "name": "addDlpStake",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -959,44 +703,12 @@
                 "type": "uint256"
             }
         ],
-        "name": "dlpEpochs",
+        "name": "dlpEpochStakeAmount",
         "outputs": [
             {
-                "components": [
-                    {
-                        "internalType": "uint256",
-                        "name": "stakeAmount",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "bool",
-                        "name": "isTopDlp",
-                        "type": "bool"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "rewardAmount",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "stakersPercentage",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "totalStakesScore",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "bool",
-                        "name": "rewardClaimed",
-                        "type": "bool"
-                    }
-                ],
-                "internalType": "struct IDLPRoot.DlpEpochInfo",
+                "internalType": "uint256",
                 "name": "",
-                "type": "tuple"
+                "type": "uint256"
             }
         ],
         "stateMutability": "view",
@@ -1016,6 +728,38 @@
                 "internalType": "uint256",
                 "name": "dlpId",
                 "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "dlpName",
+                "type": "string"
+            }
+        ],
+        "name": "dlpNameToId",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "dlpId",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "dlpRoot",
+        "outputs": [
+            {
+                "internalType": "contract IDLPRoot",
+                "name": "",
+                "type": "address"
             }
         ],
         "stateMutability": "view",
@@ -1097,7 +841,7 @@
                         "type": "string"
                     },
                     {
-                        "internalType": "enum IDLPRoot.DlpStatus",
+                        "internalType": "enum IDLPRootCore.DlpStatus",
                         "name": "status",
                         "type": "uint8"
                     },
@@ -1112,12 +856,12 @@
                         "type": "uint256"
                     },
                     {
-                        "internalType": "uint256[]",
-                        "name": "epochIds",
-                        "type": "uint256[]"
+                        "internalType": "bool",
+                        "name": "isVerified",
+                        "type": "bool"
                     }
                 ],
-                "internalType": "struct IDLPRoot.DlpInfo",
+                "internalType": "struct IDLPRootCore.DlpInfo",
                 "name": "",
                 "type": "tuple"
             }
@@ -1188,7 +932,7 @@
                         "type": "string"
                     },
                     {
-                        "internalType": "enum IDLPRoot.DlpStatus",
+                        "internalType": "enum IDLPRootCore.DlpStatus",
                         "name": "status",
                         "type": "uint8"
                     },
@@ -1203,12 +947,103 @@
                         "type": "uint256"
                     },
                     {
-                        "internalType": "uint256[]",
-                        "name": "epochIds",
-                        "type": "uint256[]"
+                        "internalType": "bool",
+                        "name": "isVerified",
+                        "type": "bool"
                     }
                 ],
-                "internalType": "struct IDLPRoot.DlpInfo",
+                "internalType": "struct IDLPRootCore.DlpInfo",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "dlpName",
+                "type": "string"
+            }
+        ],
+        "name": "dlpsByName",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "uint256",
+                        "name": "id",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "dlpAddress",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "ownerAddress",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "treasuryAddress",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "stakersPercentage",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "stakersPercentageEpoch",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "iconUrl",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "website",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "metadata",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "enum IDLPRootCore.DlpStatus",
+                        "name": "status",
+                        "type": "uint8"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "registrationBlockNumber",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "stakeAmount",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "isVerified",
+                        "type": "bool"
+                    }
+                ],
+                "internalType": "struct IDLPRootCore.DlpInfo",
                 "name": "",
                 "type": "tuple"
             }
@@ -1289,133 +1124,44 @@
     },
     {
         "inputs": [],
-        "name": "epochDlpsLimit",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "epochRewardAmount",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "epochSize",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
+        "name": "fixStakerPercentagesCheckpoints",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "epochId",
+                "name": "dlpId",
                 "type": "uint256"
             }
         ],
-        "name": "epochs",
+        "name": "getDlpStakerPercentagesCheckpoints",
         "outputs": [
             {
                 "components": [
                     {
-                        "internalType": "uint256",
-                        "name": "startBlock",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "endBlock",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "reward",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "bool",
-                        "name": "isFinalised",
-                        "type": "bool"
-                    },
-                    {
-                        "internalType": "uint256[]",
-                        "name": "dlpIds",
-                        "type": "uint256[]"
+                        "components": [
+                            {
+                                "internalType": "uint48",
+                                "name": "_key",
+                                "type": "uint48"
+                            },
+                            {
+                                "internalType": "uint208",
+                                "name": "_value",
+                                "type": "uint208"
+                            }
+                        ],
+                        "internalType": "struct Checkpoints.Checkpoint208[]",
+                        "name": "_checkpoints",
+                        "type": "tuple[]"
                     }
                 ],
-                "internalType": "struct IDLPRoot.EpochInfo",
+                "internalType": "struct Checkpoints.Trace208",
                 "name": "",
                 "type": "tuple"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "epochsCount",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "dlpIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "estimatedDlpRewardPercentages",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "internalType": "uint256",
-                        "name": "dlpId",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "APY",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "EPY",
-                        "type": "uint256"
-                    }
-                ],
-                "internalType": "struct IDLPRoot.DlpRewardApy[]",
-                "name": "",
-                "type": "tuple[]"
             }
         ],
         "stateMutability": "view",
@@ -1485,115 +1231,19 @@
     {
         "inputs": [
             {
-                "components": [
-                    {
-                        "internalType": "address",
-                        "name": "trustedForwarder",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "address payable",
-                        "name": "ownerAddress",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "eligibleDlpsLimit",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "epochDlpsLimit",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "minStakeAmount",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "minDlpStakersPercentage",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "maxDlpStakersPercentage",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "minDlpRegistrationStake",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "dlpEligibilityThreshold",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "dlpSubEligibilityThreshold",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "stakeWithdrawalDelay",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "rewardClaimDelay",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "startBlock",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "epochSize",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "daySize",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "epochRewardAmount",
-                        "type": "uint256"
-                    }
-                ],
-                "internalType": "struct DLPRootImplementation.InitParams",
-                "name": "params",
-                "type": "tuple"
+                "internalType": "address",
+                "name": "ownerAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "dlpRootAddress",
+                "type": "address"
             }
         ],
         "name": "initialize",
         "outputs": [],
         "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "forwarder",
-                "type": "address"
-            }
-        ],
-        "name": "isTrustedForwarder",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -1633,68 +1283,6 @@
             }
         ],
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "minStakeAmount",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "bytes[]",
-                "name": "data",
-                "type": "bytes[]"
-            }
-        ],
-        "name": "multicall",
-        "outputs": [
-            {
-                "internalType": "bytes[]",
-                "name": "results",
-                "type": "bytes[]"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "components": [
-                    {
-                        "internalType": "uint256",
-                        "name": "epochId",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "dlpId",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "totalStakesScore",
-                        "type": "uint256"
-                    }
-                ],
-                "internalType": "struct IDLPRoot.EpochDlpsTotalStakesScore",
-                "name": "stakeScore",
-                "type": "tuple"
-            }
-        ],
-        "name": "overrideEpochDlpsTotalStakesScore",
-        "outputs": [],
-        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -1775,7 +1363,7 @@
                         "type": "string"
                     }
                 ],
-                "internalType": "struct IDLPRoot.DlpRegistration",
+                "internalType": "struct IDLPRootCore.DlpRegistration",
                 "name": "registrationInfo",
                 "type": "tuple"
             }
@@ -1783,6 +1371,24 @@
         "name": "registerDlp",
         "outputs": [],
         "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "dlpId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "removeDlpStake",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -1822,230 +1428,6 @@
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "rewardClaimDelay",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "components": [
-                    {
-                        "internalType": "uint256",
-                        "name": "epochId",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "dlpId",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "totalStakesScore",
-                        "type": "uint256"
-                    }
-                ],
-                "internalType": "struct IDLPRoot.EpochDlpsTotalStakesScore[]",
-                "name": "stakeScore",
-                "type": "tuple[]"
-            }
-        ],
-        "name": "saveEpochDlpsTotalStakesScore",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "stakeWithdrawalDelay",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "staker",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "index",
-                "type": "uint256"
-            }
-        ],
-        "name": "stakerDlpsListAt",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "staker",
-                "type": "address"
-            }
-        ],
-        "name": "stakerDlpsListCount",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "staker",
-                "type": "address"
-            }
-        ],
-        "name": "stakerDlpsListValues",
-        "outputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "",
-                "type": "uint256[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "index",
-                "type": "uint256"
-            }
-        ],
-        "name": "stakerListAt",
-        "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "stakerListCount",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "stakeId",
-                "type": "uint256"
-            }
-        ],
-        "name": "stakes",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "internalType": "uint256",
-                        "name": "id",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "address",
-                        "name": "stakerAddress",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "dlpId",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "amount",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "startBlock",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "endBlock",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "bool",
-                        "name": "withdrawn",
-                        "type": "bool"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "lastClaimedEpochId",
-                        "type": "uint256"
-                    }
-                ],
-                "internalType": "struct IDLPRoot.StakeInfo",
-                "name": "",
-                "type": "tuple"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "stakesCount",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
         "inputs": [
             {
                 "internalType": "bytes4",
@@ -2059,38 +1441,6 @@
                 "internalType": "bool",
                 "name": "",
                 "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "numberOfDlps",
-                "type": "uint256"
-            }
-        ],
-        "name": "topDlpIds",
-        "outputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "",
-                "type": "uint256[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "trustedForwarder",
-        "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
             }
         ],
         "stateMutability": "view",
@@ -2153,7 +1503,7 @@
                         "type": "string"
                     }
                 ],
-                "internalType": "struct IDLPRoot.DlpRegistration",
+                "internalType": "struct IDLPRootCore.DlpRegistration",
                 "name": "dlpUpdateInfo",
                 "type": "tuple"
             }
@@ -2167,11 +1517,29 @@
         "inputs": [
             {
                 "internalType": "uint256",
+                "name": "newDlpSubEligibilityThreshold",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
                 "name": "newDlpEligibilityThreshold",
                 "type": "uint256"
             }
         ],
-        "name": "updateDlpEligibilityThreshold",
+        "name": "updateDlpEligibilityThresholds",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "newDlpRootAddress",
+                "type": "address"
+            }
+        ],
+        "name": "updateDlpRoot",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -2180,76 +1548,34 @@
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "newDlpSubEligibilityThreshold",
+                "name": "newMinDlpStakersPercentage",
                 "type": "uint256"
-            }
-        ],
-        "name": "updateDlpSubEligibilityThreshold",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "newEligibleDlpsLimit",
-                "type": "uint256"
-            }
-        ],
-        "name": "updateEligibleDlpsLimit",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "newEpochDlpsLimit",
-                "type": "uint256"
-            }
-        ],
-        "name": "updateEpochDlpsLimit",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "newEpochRewardAmount",
-                "type": "uint256"
-            }
-        ],
-        "name": "updateEpochRewardAmount",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "newEpochSize",
-                "type": "uint256"
-            }
-        ],
-        "name": "updateEpochSize",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
+            },
             {
                 "internalType": "uint256",
                 "name": "newMaxDlpStakersPercentage",
                 "type": "uint256"
             }
         ],
-        "name": "updateMaxDlpStakersPercentage",
+        "name": "updateDlpStakersPercentages",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "dlpId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "bool",
+                "name": "isVerified",
+                "type": "bool"
+            }
+        ],
+        "name": "updateDlpVerification",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -2263,71 +1589,6 @@
             }
         ],
         "name": "updateMinDlpRegistrationStake",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "newMinDlpStakersPercentage",
-                "type": "uint256"
-            }
-        ],
-        "name": "updateMinDlpStakersPercentage",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "newMinStakeAmount",
-                "type": "uint256"
-            }
-        ],
-        "name": "updateMinStakeAmount",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "newRewardClaimDelay",
-                "type": "uint256"
-            }
-        ],
-        "name": "updateRewardClaimDelay",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "newStakeWithdrawalDelay",
-                "type": "uint256"
-            }
-        ],
-        "name": "updateStakeWithdrawalDelay",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "trustedForwarderAddress",
-                "type": "address"
-            }
-        ],
-        "name": "updateTrustedForwarder",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -2361,19 +1622,6 @@
             }
         ],
         "stateMutability": "pure",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256[]",
-                "name": "stakeIds",
-                "type": "uint256[]"
-            }
-        ],
-        "name": "withdrawStakes",
-        "outputs": [],
-        "stateMutability": "nonpayable",
         "type": "function"
     }
 ]

@@ -12,7 +12,8 @@ SERVICE_ACCOUNT_FILE = "vana-dlp-hub-599a9f70ed08.json"  # Replace with your JSO
 
 # Ethereum Smart Contract Setup
 RPC_URL = "https://rpc.islander.vana.org"  # Replace with your Infura endpoint
-CONTRACT_ADDRESS = "0xff14346dF2B8Fd0c95BF34f1c92e49417b508AD5"  # Replace with your smart contract address
+# CONTRACT_ADDRESS = "0xff14346dF2B8Fd0c95BF34f1c92e49417b508AD5"  # Replace with your smart contract address
+CONTRACT_ADDRESS = "0x0aBa5e28228c323A67712101d61a54d4ff5720FD"  # Replace with your smart contract address
 ABI = json.load(open("abi.json"))
 
 STATUS = ("None", "Registered", "Eligible", "SubEligible", "Deregistered")
@@ -66,17 +67,18 @@ def update_google_sheet():
         dlps.append((id, dlp_address, owner_address, name, website, status, stake_amount / 10**18))
         
     dlps.sort(key=lambda x: x[6], reverse=True)
-    cells = sheet.range(f'A2:H{1 + len(dlps)}')
+    cells = sheet.range(f'A2:I{1 + len(dlps)}')
     for i in range(len(dlps)):
         id, dlp_address, owner_address, name, website, status, stake_amount = dlps[i]
-        cells[8 * i + 0].value = i + 1
-        cells[8 * i + 1].value = id
-        cells[8 * i + 2].value = name
-        cells[8 * i + 3].value = stake_amount
-        cells[8 * i + 4].value = website
-        cells[8 * i + 5].value = STATUS[status]
-        cells[8 * i + 6].value = dlp_address
-        cells[8 * i + 7].value = owner_address
+        cells[9 * i + 0].value = i + 1
+        cells[9 * i + 1].value = id
+        cells[9 * i + 2].value = name
+        cells[9 * i + 3].value = stake_amount
+        cells[9 * i + 4].value = 0 if i == 0 else stake_amount - dlps[i-1][6]
+        cells[9 * i + 5].value = website
+        cells[9 * i + 6].value = STATUS[status]
+        cells[9 * i + 7].value = dlp_address
+        cells[9 * i + 8].value = owner_address
 
     sheet.update_cells(cells)
     
