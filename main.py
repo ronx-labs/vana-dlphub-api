@@ -11,7 +11,7 @@ SHEET_NAME = "Vana DLPs"  # Replace with your sheet name
 SERVICE_ACCOUNT_FILE = "vana-dlp-hub-599a9f70ed08.json"  # Replace with your JSON key file path
 
 # Ethereum Smart Contract Setup
-RPC_URL = "https://rpc.islander.vana.org"  # Replace with your Infura endpoint
+RPC_URL = "https://rpc.vana.org"  # Replace with your Infura endpoint
 # CONTRACT_ADDRESS = "0xff14346dF2B8Fd0c95BF34f1c92e49417b508AD5"  # Replace with your smart contract address
 CONTRACT_ADDRESS = "0x0aBa5e28228c323A67712101d61a54d4ff5720FD"  # Replace with your smart contract address
 ABI = json.load(open("abi.json"))
